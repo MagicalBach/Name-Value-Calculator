@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Name Value Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Name Value Calculator</h1>
+    <label for="nameInput">Enter your name:</label>
+    <input type="text" id="nameInput">
+    <button onclick="calculate()">Calculate</button>
+    <div id="result"></div>
+
+    <script>
+        const nameInput = document.getElementById("nameInput");
+
+        // Add event listener for the "Enter" key press
+        nameInput.addEventListener("keyup", function(event) {
+          if (event.key === "Enter") {
+            event.preventDefault();  // Prevent form submission (if inside a form)
+            calculate();
+          }
+        });
+
+        function calculate() {
+            const name = nameInput.value;
+            let totalValue = calculateNameValue(name);
+
+            let s = 0;
+            let d;
+            let tempTotal = totalValue; // Store the original totalValue
+
+            do {
+                d = tempTotal % 10;
+                s = s + d;
+                tempTotal = Math.floor(tempTotal / 10); // Use Math.floor for integer division
+            } while (tempTotal > 0);
+
+            document.getElementById("result").innerText = totalValue + "/" + s;
+        }
+
+        function calculateNameValue(name) {
+            let total = 0;
+            for (let i = 0; i < name.length; i++) {
+                total += getLetterValue(name[i]);
+            }
+            return total;
+        }
+
+        function getLetterValue(c) {
+            c = c.toLowerCase();
+
+            switch (c) {
+                case 'a':
+                case 'm':
+                case 'n':
+                case 'z':
+                    return 1;
+                case 'b':
+                case 'l':
+                case 'o':
+                case 'y':
+                    return 2;
+                case 'c':
+                case 'k':
+                case 'p':
+                case 'x':
+                    return 3;
+                case 'd':
+                case 'j':
+                case 'q':
+                case 'w':
+                    return 4;
+                case 'e':
+                case 'i':
+                case 'r':
+                case 'v':
+                    return 5;
+                case 'f':
+                case 'h':
+                case 's':
+                case 'u':
+                    return 6;
+                case 'g':
+                case 't':
+                    return 7;
+                default:
+                    return 0;
+            }
+        }
+    </script>
+</body>
+</html>
