@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Name Value Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .calculator-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Name Value Calculator</h1>
+        <input type="text" id="nameInput" placeholder="Enter a name">
+        <button onclick="calculateValue()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateValue() {
+            const name = document.getElementById("nameInput").value;
+            if (!name) {
+                document.getElementById("result").innerText = "Please enter a name.";
+                return;
+            }
+
+            const initialValue = calculateNameValue(name);
+            let resultString = initialValue + "/";
+
+            let finalValue = initialValue;
+            for (let i = 0; i <= 1; i++) {
+                finalValue = calculateSumOfDigits(finalValue);
+                resultString += finalValue + "/";
+            }
+
+            document.getElementById("result").innerText = "Result: " + resultString;
+        }
+
+        function calculateNameValue(name) {
+            let totalValue = 0;
+            name = name.toLowerCase(); // Make it case-insensitive
+
+            for (let i = 0; i < name.length; i++) {
+                const c = name[i];
+                let charValue = getCharValue(c);
+                totalValue += charValue;
+            }
+
+            return totalValue;
+        }
+
+        function getCharValue(c) {
+            switch (c) {
+                case 'a':
+                case 'b':
+                case 'y':
+                case 'z':
+                    return 1;
+                case 'c':
+                case 'x':
+                    return 2;
+                case 'd':
+                case 'w':
+                    return 3;
+                case 'e':
+                case 'v':
+                    return 5;
+                case 'f':
+                case 'u':
+                    return 8;
+                case 'g':
+                case 't':
+                    return 13;
+                case 'h':
+                case 's':
+                    return 21;
+                case 'i':
+                case 'r':
+                    return 34;
+                case 'j':
+                case 'q':
+                    return 55;
+                case 'k':
+                case 'p':
+                    return 89;
+                case 'l':
+                case 'o':
+                    return 144;
+                case 'm':
+                case 'n':
+                    return 233;
+                default:
+                    return 0; // Handle characters not in the list
+            }
+        }
+
+        function calculateSumOfDigits(number) {
+            let sum = 0;
+            while (number !== 0) {
+                sum += number % 10;
+                number = Math.floor(number / 10);
+            }
+            return sum;
+        }
+    </script>
+</body>
+</html>
